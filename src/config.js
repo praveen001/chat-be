@@ -6,7 +6,7 @@ module.exports = {
   databaseName: 'chat-be',
   databaseUser: '',
   databasePassword: '',
-  enableSSL: false,
-  sslKey: '',
-  sslCert: ''
+  enableSSL: true,
+  sslKey: 'C:\\test\\privatekey.key',
+  sslCert: 'C:\\test\\certificate.crt'
 };

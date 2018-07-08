@@ -15,7 +15,16 @@ async function sendMessage(connections, from, to, message) {
 
     /* Send to all recipient sockets */
     (connections[to] || []).forEach(recipient => {
-      recipient.emit('onReceiveMessage', savedMessage);
+      recipient.emit('onReceiveMessage', savedMessage, () => {
+        /* mark message as received in db */
+        messageObject.received = true;
+        messageObject.save();
+
+        /* let sender know */
+        (connections[from] || []).forEach(sender => {
+          sender.emit('onAcknowledgement', messageObject);
+        });
+      });
     });
 
     /* Send to all sender sockets as well */
