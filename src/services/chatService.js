@@ -35,11 +35,21 @@ async function sendMessage(connections, from, to, message) {
 
 }
 
+async function sendVideoRequest(connections, from, to, description) {
+  (connections[to] || []).forEach(recipient => {
+    recipient.emit('receiveVideoRequest', {
+      from,
+      description,
+    });
+  });
+}
+
 async function getMessages(email1, email2) {
   return await Message.getMessagesByEmail(email1, email2);
 }
 
 module.exports = {
   sendMessage,
+  sendVideoRequest,
   getMessages,
 };

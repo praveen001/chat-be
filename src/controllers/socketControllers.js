@@ -27,6 +27,11 @@ function init(server) {
       chatService.sendMessage(connectedSockets, connection.email, data.to, data.message);
     });
 
+    /* Send video call request to recipient */
+    connection.on('onSendVideoRequest', (data) => {
+      chatService.sendVideoRequest(connectedSockets, connection.email, data.to, data.description);
+    });
+
     connection.on('disconnect', () => {
       delete connectedSockets[connection.userId];
     });
