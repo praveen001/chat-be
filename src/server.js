@@ -21,7 +21,7 @@ const env = process.env.NODE_ENV || 'development';
 
 // DB Connection
 let user = config.databaseUser ? `${config.databaseUser}:${config.databasePassword}@` : '';
-mongoose.connect(`mongodb://${user}${config.databaseHost}/${config.databaseName}`);
+mongoose.connect(`mongodb://${user}${config.databaseHost}/${config.databaseName}`, { useNewUrlParser: true });
 
 // Middlewares
 app.use(bodyParser.json());

@@ -29,7 +29,17 @@ function init(server) {
 
     /* Send video call request to recipient */
     connection.on('onSendVideoRequest', (data) => {
+      console.log(`Signal server: onSendVideoRequest(${data.to})`);
       chatService.sendVideoRequest(connectedSockets, connection.email, data.to, data.description);
+    });
+
+    connection.on('onAcceptVideoRequest', (data) => {
+      console.log(`Signal server: onAcceptVideoRequest(${data.to})`);
+      chatService.acceptVideoRequest(connectedSockets, connection.email, data.to, data.description);
+    });
+
+    connection.on('iceCandidateExchange', (data) => {
+      chatService.iceCandidateExchange(connectedSockets, connection.email, data.to, data.candidate);
     });
 
     connection.on('disconnect', () => {

@@ -37,9 +37,29 @@ async function sendMessage(connections, from, to, message) {
 
 async function sendVideoRequest(connections, from, to, description) {
   (connections[to] || []).forEach(recipient => {
+    console.log('sent video request to ' + to);
     recipient.emit('receiveVideoRequest', {
       from,
       description,
+    });
+  });
+}
+
+async function acceptVideoRequest(connections, from, to, description) {
+  (connections[to] || []).forEach(recipient => {
+    console.log('accept video request');
+    recipient.emit('acceptVideoRequest', {
+      from,
+      description,
+    });
+  });
+}
+
+async function iceCandidateExchange(connections, from, to, candidate) {
+  (connections[to] || []).forEach(recipient => {
+    recipient.emit('iceCandidateExchange', {
+      from,
+      candidate,
     });
   });
 }
@@ -51,5 +71,7 @@ async function getMessages(email1, email2) {
 module.exports = {
   sendMessage,
   sendVideoRequest,
+  acceptVideoRequest,
+  iceCandidateExchange,
   getMessages,
 };
